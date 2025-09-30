@@ -20,29 +20,32 @@ public class CheckBoxTest {
         WebElement headerElement=driver.findElement(By.tagName("h3"));
         String actualHeaderText=headerElement.getText();
         // Verify the Header Text is displayed
-        Assert.assertEquals(actualHeaderText,expectedHeaderText);
+        Assert.assertEquals(actualHeaderText,expectedHeaderText,"Header Tex is displayed");
         List<WebElement> checkBoxes=
                 driver.findElements(By.xpath("//form[@id='checkboxes']//input"));
         for(WebElement e: checkBoxes)
         {
             // Verifying if the checkboxes are displayed
-            Assert.assertTrue(e.isDisplayed());
+            Assert.assertTrue(e.isDisplayed(),"Check Box is Displayed");
             if(e.getText().equalsIgnoreCase("checkbox 2"))
             {
                 // Verifying by default the second checkbox is selected
-                Assert.assertTrue(e.isSelected());
+                Assert.assertTrue(e.isSelected(),"Second Check Box is Selected");
+                e.click();
+                //Verify the second check box is unselected
+                Assert.assertFalse(e.isSelected(),"Second Check Box is not Selected");
             }
             if(e.getText().equalsIgnoreCase("checkbox 1"))
             {
                 // Verifying if first check box is not selected and checking it
                 e.click();
-                Assert.assertTrue(e.isSelected());
+                Assert.assertTrue(e.isSelected(),"First Check Box is Selected");
             }
             if(e.isSelected())
             {
                 // Verifying both the checkboxes are not selected
                 e.click();
-                Assert.assertFalse(e.isSelected());
+                Assert.assertFalse(e.isSelected(),"Check Box is not Selected");
             }
         }
         driver.quit();
