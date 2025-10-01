@@ -38,7 +38,7 @@ public class AddRemoveElementTest {
         }
         deleteBtn=driver.findElement(By.xpath("//button[@onclick='deleteElement()']"));
         Assert.assertTrue(deleteBtn.isDisplayed());
-
+        driver.quit();
     }
 
 }
