@@ -205,4 +205,63 @@ public String getCpuPercentOfName(String browserName)
     }
     return "not found";
 }
+
+@Test
+    public void paginationTableTest()
+{
+    driver=new ChromeDriver();
+    driver.get("https://testautomationpractice.blogspot.com/");
+    driver.manage().window().maximize();
+    List<WebElement> columns=
+            driver.findElements(By.xpath("//table[@id='productTable']//th"));
+    List<WebElement> rowsPerPage=
+            driver.findElements(By.xpath("//table[@id='productTable']//tr"));
+    WebElement cell=
+            driver.findElement(By.xpath("//table[@id='productTable']//tr[2]/td[4]"));
+    List<WebElement> eachRow=
+            driver.findElements(By.xpath("//table[@id='productTable']//tr[1]/td"));
+    WebElement singlePage=
+            driver.findElement(By.xpath("//ul[@id='pagination']/li[1]/a"));
+    List<WebElement> allPages=
+            driver.findElements(By.xpath("//ul[@id='pagination']//a"));
+    WebElement selectCheckBox=
+            driver.findElement(By.xpath("//table[@id='productTable']//tr[1]//input[@type='checkbox']"));
+    // Printing all values in the pagination table
+    int totalPages=allPages.size();
+    for(int i=1;i<=totalPages;i++)
+    {
+        System.out.println("Page " +i+":");
+        singlePage=
+                driver.findElement(By.xpath("//ul[@id='pagination']/li["+i+"]/a"));
+        singlePage.click();
+        rowsPerPage=
+                driver.findElements(By.xpath("//table[@id='productTable']//tr"));
+        for(int j=1;j< rowsPerPage.size();j++)
+        {
+            System.out.println(" Row " +j+ ": ");
+            columns=
+                    driver.findElements(By.xpath("//table[@id='productTable']//th"));
+            // Selecting each rows select check box
+            selectCheckBox=
+                    driver.findElement(By.xpath(
+                            "//table[@id='productTable']//tr["+j+"]//input[@type='checkbox']"));
+            selectCheckBox.click();
+            if(selectCheckBox.isSelected())
+            {
+                System.out.println("Check Box of row " +j+ " is checked");
+            }
+            for(int k=1;k<columns.size();k++)
+            {
+                cell=
+                        driver.findElement(By.xpath(
+                                "//table[@id='productTable']//tr["+j+"]/td["+k+"]"));
+                System.out.print(cell.getText()+" | ");
+
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+    driver.quit();
+}
 }
